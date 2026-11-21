@@ -12,10 +12,10 @@ A self-hosted meta search engine running in Docker, aggregating results from mul
 ./wake.sh
 
 # Access the interface; any request wakes the backend first
-# Visit http://127.0.0.1:8080
+# Visit http://127.0.0.1:18081
 ```
 
-The proxy listens on `127.0.0.1:8080` and keeps the backend sleeping until the
+The proxy listens on `127.0.0.1:18081` and keeps the backend sleeping until the
 first request. It stops the Compose stack with `docker compose stop` after
 `SEARXNG_IDLE_TIMEOUT_SECONDS` without activity. Containers are reused on the
 next wake; data volumes are never removed.
@@ -23,8 +23,8 @@ next wake; data volumes are never removed.
 Codev can use the wake endpoint directly:
 
 ```bash
-export SEARXNG_BASE_URL=http://127.0.0.1:8080
-export SEARXNG_WAKE_URL=http://127.0.0.1:8080/wake
+export SEARXNG_BASE_URL=http://127.0.0.1:18081
+export SEARXNG_WAKE_URL=http://127.0.0.1:18081/wake
 ```
 
 ## Project Structure
@@ -53,14 +53,14 @@ searxng/
 | `SEARXNG_PORT` | Container port | 8080 |
 | `SEARXNG_BACKEND_PORT` | Host-side backend port behind the proxy | 18080 |
 | `SEARXNG_PROXY_HOST` | Wake proxy bind address | 127.0.0.1 |
-| `SEARXNG_PROXY_PORT` | Wake proxy port | 8080 |
+| `SEARXNG_PROXY_PORT` | Wake proxy port | 18081 |
 | `SEARXNG_IDLE_TIMEOUT_SECONDS` | Stop the backend after this idle period | 300 |
 | `SEARXNG_WAKE_TIMEOUT_SECONDS` | Maximum wake readiness wait | 120 |
 | `SEARXNG_SEARCH_TIMEOUT_SECONDS` | Proxied request timeout | 120 |
 
 ### Main Settings (settings.yml)
 
-- **Server**: Port 8888 (internal), exposed on 8080
+- **Server**: Container port 8080, exposed on host port 18080
 - **Search**: SafeSearch level 0 (none), no autocomplete by default
 - **UI**: Simple theme, auto dark mode support
 - **Outgoing**: 3s timeout, HTTP/2 enabled
@@ -134,7 +134,7 @@ docker compose pull
 
 | Service | Internal Port | Host Port |
 |--------|--------------|-----------|
-| searxng-wake proxy | - | 127.0.0.1:8080 |
+| searxng-wake proxy | - | 127.0.0.1:18081 |
 | searxng-core | 8080 | 127.0.0.1:18080 |
 | valkey (cache) | 6379 | - (not exposed) |
 

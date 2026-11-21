@@ -20,11 +20,13 @@ if [[ "${1:-}" == "--backend" ]]; then
 fi
 
 ./install-service.sh
-PORT="${SEARXNG_PROXY_PORT:-8080}"
+  PORT="${SEARXNG_PROXY_PORT:-18081}"
+
 if [[ -f .env ]]; then
   # shellcheck disable=SC1091
   set -a; source ./.env; set +a
-  PORT="${SEARXNG_PROXY_PORT:-8080}"
+PORT="${SEARXNG_PROXY_PORT:-18081}"
+
 fi
 echo "已启动按需代理: http://127.0.0.1:${PORT}"
 echo "首次请求会拉起 SearXNG，空闲 ${SEARXNG_IDLE_TIMEOUT_SECONDS:-300}s 后自动休眠。"

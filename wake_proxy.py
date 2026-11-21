@@ -31,7 +31,7 @@ def load_env() -> None:
 load_env()
 
 PROXY_HOST = os.getenv("SEARXNG_PROXY_HOST", "127.0.0.1")
-PROXY_PORT = int(os.getenv("SEARXNG_PROXY_PORT", os.getenv("SEARXNG_PORT", "8080")))
+PROXY_PORT = int(os.getenv("SEARXNG_PROXY_PORT", "18081"))
 BACKEND_HOST = "127.0.0.1"
 BACKEND_PORT = int(os.getenv("SEARXNG_BACKEND_PORT", "18080"))
 IDLE_TIMEOUT = int(os.getenv("SEARXNG_IDLE_TIMEOUT_SECONDS", "300"))
