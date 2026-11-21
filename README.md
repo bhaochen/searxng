@@ -5,11 +5,26 @@ A self-hosted meta search engine running in Docker, aggregating results from mul
 ## Quick Start
 
 ```bash
-# Start services
-docker compose up -d
+# Install and start the lazy wake proxy
+./start.sh
 
-# Access the interface
-# Visit http://localhost:8080
+# Wake explicitly
+./wake.sh
+
+# Access the interface; any request wakes the backend first
+# Visit http://127.0.0.1:8080
+```
+
+The proxy listens on `127.0.0.1:8080` and keeps the backend sleeping until the
+first request. It stops the Compose stack with `docker compose stop` after
+`SEARXNG_IDLE_TIMEOUT_SECONDS` without activity. Containers are reused on the
+next wake; data volumes are never removed.
+
+Codev can use the wake endpoint directly:
+
+```bash
+export SEARXNG_BASE_URL=http://127.0.0.1:8080
+export SEARXNG_WAKE_URL=http://127.0.0.1:8080/wake
 ```
 
 ## Project Structure
@@ -17,7 +32,11 @@ docker compose up -d
 ```
 searxng/
 ├── docker-compose.yml       # Container orchestration
-├── .env                    # Environment variables
+├── wake_proxy.py            # Always-on loopback wake proxy
+├── searxng-wake.service.in  # systemd user service template
+├── install-service.sh       # Install the user service
+├── wake.sh / sleep.sh       # Manual wake / sleep helpers
+├── .env                     # Environment variables
 ├── core-config/
 │   └── settings.yml        # Main configuration
 └── .env.example            # Environment template
@@ -30,8 +49,14 @@ searxng/
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `SEARXNG_VERSION` | Docker image tag | latest |
-| `SEARXNG_HOST` | Listen address | - |
-| `SEARXNG_PORT` | Listen port | 8080 |
+| `SEARXNG_HOST` | Backend bind address | 127.0.0.1 |
+| `SEARXNG_PORT` | Container port | 8080 |
+| `SEARXNG_BACKEND_PORT` | Host-side backend port behind the proxy | 18080 |
+| `SEARXNG_PROXY_HOST` | Wake proxy bind address | 127.0.0.1 |
+| `SEARXNG_PROXY_PORT` | Wake proxy port | 8080 |
+| `SEARXNG_IDLE_TIMEOUT_SECONDS` | Stop the backend after this idle period | 300 |
+| `SEARXNG_WAKE_TIMEOUT_SECONDS` | Maximum wake readiness wait | 120 |
+| `SEARXNG_SEARCH_TIMEOUT_SECONDS` | Proxied request timeout | 120 |
 
 ### Main Settings (settings.yml)
 
@@ -83,25 +108,34 @@ The following plugins are enabled by default:
 ## Management
 
 ```bash
-# Restart services
-docker compose restart
+# Start the wake proxy
+./start.sh
 
-# Stop services
-docker compose down
+# Start the backend directly without the proxy
+./start.sh --backend
+
+# Wake the backend
+./wake.sh
+
+# Put the backend to sleep; add --proxy to also stop the proxy
+./stop.sh
+./stop.sh --proxy
 
 # View logs
+journalctl --user -u searxng-wake.service -f
 docker logs searxng-core
 
 # Update image
 docker compose pull
-docker compose up -d
+./wake.sh
 ```
 
 ## Ports
 
-| Service | Internal Port | External Port |
-|--------|--------------|--------------|
-| searxng-core | 8888 | 8080 |
+| Service | Internal Port | Host Port |
+|--------|--------------|-----------|
+| searxng-wake proxy | - | 127.0.0.1:8080 |
+| searxng-core | 8080 | 127.0.0.1:18080 |
 | valkey (cache) | 6379 | - (not exposed) |
 
 ## Documentation

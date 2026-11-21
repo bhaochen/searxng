@@ -1,0 +1,14 @@
+[Unit]
+Description=Lazy wake proxy for SearXNG
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=@SEARXNG_HOME@
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 @SEARXNG_HOME@/wake_proxy.py
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target
