@@ -10,6 +10,8 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+from engine_filter import generate_active_settings
+
 ROOT = Path(__file__).resolve().parent
 
 
@@ -116,6 +118,11 @@ def wake_backend() -> None:
         if backend_healthy():
             return
         log("starting backend")
+        mode, enabled, disabled = generate_active_settings(
+            ROOT / "core-config" / "settings.yml",
+            ROOT / "core-config" / "settings.active.yml",
+        )
+        log(f"engine filter: {mode}, enabled={enabled}, disabled={disabled}")
         ensure_docker()
         result = compose("up", "-d", "--wait", "--wait-timeout", str(WAKE_TIMEOUT))
         if result.returncode != 0:

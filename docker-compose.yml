@@ -14,7 +14,7 @@ services:
     environment:
       PYTHONPATH: /usr/local/searxng/overrides
     volumes:
-      - ./core-config/:/etc/searxng/:Z
+      - ./core-config/settings.active.yml:/etc/searxng/settings.yml:Z
       - ./overrides/:/usr/local/searxng/overrides/:Z
       - core-data:/var/cache/searxng/
 

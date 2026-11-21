@@ -33,12 +33,14 @@ export SEARXNG_WAKE_URL=http://127.0.0.1:18081/wake
 searxng/
 ├── docker-compose.yml       # Container orchestration
 ├── wake_proxy.py            # Always-on loopback wake proxy
+├── engine_filter.py         # Network-aware engine selection
 ├── searxng-wake.service.in  # systemd user service template
 ├── install-service.sh       # Install the user service
 ├── wake.sh / sleep.sh       # Manual wake / sleep helpers
 ├── .env                     # Environment variables
 ├── core-config/
-│   └── settings.yml        # Main configuration
+│   ├── settings.yml        # Full engine template
+│   └── settings.active.yml # Generated configuration used by the backend
 ├── overrides/
 │   └── sitecustomize.py    # Disable curl_cffi browser impersonation
 └── .env.example            # Environment template
@@ -67,23 +69,19 @@ searxng/
 - **UI**: Simple theme, auto dark mode support
 - **Outgoing**: 10s timeout, HTTP/2 disabled, browser impersonation disabled
 
-## Enabled Search Engines
+## Engine selection
 
-### General
-- bing, yandex, wikipedia, wikidata, aol, karmasearch
-- google, duckduckgo, brave, startpage, baidu and seznam are disabled in this environment
+`settings.yml` is a full template. On every backend wake, `engine_filter.py`
+probes the current network and writes `settings.active.yml`, which is the file
+mounted into SearXNG.
 
-### Images
-- bing images, duckduckgo images, flickr, openverse, pexels, pixabay
-
-### Videos
-- bing videos, duckduckgo videos, google videos, piped
-
-### News
-- bing news, duckduckgo news, google news, qwant news, reuters
-
-### IT / Development
-- github, gitlab, stackoverflow,MDN, docker hub
+- If Google, DuckDuckGo, or Brave is reachable, the backend runs in `foreign`
+  mode with all functional engines enabled.
+- Otherwise it runs in `domestic` mode: engines are probed in parallel and only
+  reachable ones are enabled.
+- Baidu and Sogou variants are always disabled because they return ad-heavy
+  results.
+- Engines that do not exist in the current SearXNG image are also skipped.
 
 ### Science
 - arxiv, crossref, openalex, pubmed, semantic scholar
