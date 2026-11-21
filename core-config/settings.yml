@@ -178,9 +178,9 @@ ui:
 #
 outgoing:
   # default timeout in seconds, can be override by engine
-  request_timeout: 3.0
+  request_timeout: 10.0
   # the maximum timeout in seconds
-  # max_request_timeout: 10.0
+  max_request_timeout: 20.0
   # suffix of searxng_useragent, could contain information like an email address
   # to the administrator
   useragent_suffix: ""
@@ -190,7 +190,7 @@ outgoing:
   # point.
   pool_maxsize: 20
   # See https://www.python-httpx.org/http2/
-  enable_http2: true
+  enable_http2: false
   # uncomment below section if you want to use a custom server certificate
   # see https://www.python-httpx.org/advanced/#changing-the-verification-defaults
   # and https://www.python-httpx.org/compatibility/#ssl-configuration
@@ -527,7 +527,7 @@ engines:
   - name: bing
     engine: bing
     shortcut: bi
-    disabled: true
+    enable_http3: false
 
   - name: bing images
     engine: bing_images
@@ -811,24 +811,28 @@ engines:
   - name: duckduckgo
     engine: duckduckgo
     shortcut: ddg
+    disabled: true
 
   - name: duckduckgo images
     engine: duckduckgo_extra
     categories: [images]
     ddg_category: images
     shortcut: ddi
+    disabled: true
 
   - name: duckduckgo videos
     engine: duckduckgo_extra
     categories: [videos]
     ddg_category: videos
     shortcut: ddv
+    disabled: true
 
   - name: duckduckgo news
     engine: duckduckgo_extra
     categories: [news]
     ddg_category: news
     shortcut: ddn
+    disabled: true
 
   - name: duckduckgo weather
     engine: duckduckgo_weather
@@ -1043,22 +1047,27 @@ engines:
   - name: google
     engine: google
     shortcut: go
+    disabled: true
 
   - name: google images
     engine: google_images
     shortcut: goi
+    disabled: true
 
   - name: google news
     engine: google_news
     shortcut: gon
+    disabled: true
 
   - name: google videos
     engine: google_videos
     shortcut: gov
+    disabled: true
 
   - name: google scholar
     engine: google_scholar
     shortcut: gos
+    disabled: true
 
   - name: google play apps
     engine: google_play
@@ -2001,18 +2010,21 @@ engines:
     shortcut: sp
     startpage_categ: web
     categories: [general, web]
+    disabled: true
 
   - name: startpage news
     engine: startpage
     startpage_categ: news
     categories: [news, web]
     shortcut: spn
+    disabled: true
 
   - name: startpage images
     engine: startpage
     startpage_categ: images
     categories: [images, web]
     shortcut: spi
+    disabled: true
 
   - name: steam
     engine: steam
@@ -2133,7 +2145,6 @@ engines:
     categories: general
     search_type: web
     shortcut: yd
-    disabled: true
 
   - name: yandex images
     engine: yandex
@@ -2605,6 +2616,7 @@ engines:
     categories: [general, web]
     brave_category: search
     # brave_spellcheck: true
+    disabled: true
 
   - name: brave.images
     engine: brave
@@ -2612,6 +2624,7 @@ engines:
     shortcut: brimg
     categories: [images, web]
     brave_category: images
+    disabled: true
 
   - name: brave.videos
     engine: brave
@@ -2619,6 +2632,7 @@ engines:
     shortcut: brvid
     categories: [videos, web]
     brave_category: videos
+    disabled: true
 
   - name: brave.news
     engine: brave
@@ -2626,6 +2640,7 @@ engines:
     shortcut: brnews
     categories: news
     brave_category: news
+    disabled: true
 
   # - name: brave.goggles
   #   engine: brave

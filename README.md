@@ -39,6 +39,8 @@ searxng/
 ├── .env                     # Environment variables
 ├── core-config/
 │   └── settings.yml        # Main configuration
+├── overrides/
+│   └── sitecustomize.py    # Disable curl_cffi browser impersonation
 └── .env.example            # Environment template
 ```
 
@@ -63,13 +65,13 @@ searxng/
 - **Server**: Container port 8080, exposed on host port 18080
 - **Search**: SafeSearch level 0 (none), no autocomplete by default
 - **UI**: Simple theme, auto dark mode support
-- **Outgoing**: 3s timeout, HTTP/2 enabled
+- **Outgoing**: 10s timeout, HTTP/2 disabled, browser impersonation disabled
 
 ## Enabled Search Engines
 
 ### General
-- arch linux wiki, arxiv, bandcamp, brave, currency converter
-- duckduckgo, google, wikipedia, wikidata, yandex
+- bing, yandex, wikipedia, wikidata, aol, karmasearch
+- google, duckduckgo, brave, startpage, baidu and seznam are disabled in this environment
 
 ### Images
 - bing images, duckduckgo images, flickr, openverse, pexels, pixabay

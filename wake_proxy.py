@@ -154,7 +154,7 @@ def idle_worker() -> None:
 
 
 def begin_request() -> None:
-    global active_requests
+    global last_activity, active_requests
     with state_lock:
         last_activity = time.monotonic()
         active_requests += 1
@@ -204,6 +204,8 @@ class Handler(BaseHTTPRequestHandler):
                 if key.lower() not in HOP_REQUEST_HEADERS and key.lower() != "host"
             }
             headers["Host"] = f"{BACKEND_HOST}:{BACKEND_PORT}"
+            headers["X-Real-IP"] = self.client_address[0]
+            headers["X-Forwarded-For"] = self.client_address[0]
             connection = http.client.HTTPConnection(
                 BACKEND_HOST,
                 BACKEND_PORT,
