@@ -120,7 +120,7 @@ def wake_backend() -> None:
         log("starting backend")
         mode, enabled, disabled = generate_active_settings(
             ROOT / "core-config" / "settings.yml",
-            ROOT / "core-config" / "settings.active.yml",
+            ROOT / "runtime" / "settings.active.yml",
         )
         log(f"engine filter: {mode}, enabled={enabled}, disabled={disabled}")
         ensure_docker()
@@ -187,7 +187,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        self.wfile.write(body)
+        try:
+            self.wfile.write(body)
+        except BrokenPipeError:
+            pass
 
     def read_body(self) -> bytes:
         raw_length = self.headers.get("Content-Length")
@@ -236,6 +239,8 @@ class Handler(BaseHTTPRequestHandler):
                 self.wfile.write(response_body)
             finally:
                 connection.close()
+        except BrokenPipeError:
+            log("client disconnected")
         except Exception as exc:
             log(f"request failed: {exc}")
             self.send_json(502, {"error": str(exc)})

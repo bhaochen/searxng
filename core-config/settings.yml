@@ -527,19 +527,23 @@ engines:
   - name: bing
     engine: bing
     shortcut: bi
+    base_url: https://cn.bing.com
     enable_http3: false
 
   - name: bing images
     engine: bing_images
     shortcut: bii
+    base_url: https://cn.bing.com
 
   - name: bing news
     engine: bing_news
     shortcut: bin
+    base_url: https://cn.bing.com
 
   - name: bing videos
     engine: bing_videos
     shortcut: biv
+    base_url: https://cn.bing.com
 
   - name: bitchute
     engine: bitchute

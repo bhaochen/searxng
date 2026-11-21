@@ -39,7 +39,8 @@ searxng/
 ├── wake.sh / sleep.sh       # Manual wake / sleep helpers
 ├── .env                     # Environment variables
 ├── core-config/
-│   ├── settings.yml        # Full engine template
+│   └── settings.yml        # Full engine template
+├── runtime/
 │   └── settings.active.yml # Generated configuration used by the backend
 ├── overrides/
 │   └── sitecustomize.py    # Disable curl_cffi browser impersonation
@@ -77,10 +78,12 @@ mounted into SearXNG.
 
 - If Google, DuckDuckGo, or Brave is reachable, the backend runs in `foreign`
   mode with all functional engines enabled.
-- Otherwise it runs in `domestic` mode: engines are probed in parallel and only
-  reachable ones are enabled.
+- Otherwise it runs in `domestic` mode: only Bing and DuckDuckGo engines that
+  are reachable are enabled.
 - Baidu and Sogou variants are always disabled because they return ad-heavy
   results.
+- Bing engines are pinned to `cn.bing.com`; `www.bing.com` returns an unfollowed
+  redirect from this network.
 - Engines that do not exist in the current SearXNG image are also skipped.
 
 ### Science

@@ -408,6 +408,7 @@ engines:
     enable_http: true
     shortcut: ah
 
+    disabled: true
   - name: anaconda
     engine: xpath
     paging: true
@@ -447,6 +448,7 @@ engines:
     engine: archlinux
     shortcut: al
 
+    disabled: true
   - name: nixos wiki
     engine: mediawiki
     shortcut: nixw
@@ -471,6 +473,7 @@ engines:
     engine: arxiv
     shortcut: arx
 
+    disabled: true
   - name: ask
     engine: ask
     shortcut: ask
@@ -533,19 +536,23 @@ engines:
   - name: bing
     engine: bing
     shortcut: bi
+    base_url: https://cn.bing.com
     enable_http3: false
 
   - name: bing images
     engine: bing_images
     shortcut: bii
+    base_url: https://cn.bing.com
 
   - name: bing news
     engine: bing_news
     shortcut: bin
+    base_url: https://cn.bing.com
 
   - name: bing videos
     engine: bing_videos
     shortcut: biv
+    base_url: https://cn.bing.com
 
   - name: bitchute
     engine: bitchute
@@ -716,6 +723,7 @@ engines:
     engine: currency_convert
     shortcut: cc
 
+    disabled: true
   - name: deezer
     engine: deezer
     shortcut: dz
@@ -737,6 +745,7 @@ engines:
     shortcut: di
     timeout: 3.0
 
+    disabled: true
   - name: ddg definitions
     engine: duckduckgo_definitions
     shortcut: ddd
@@ -818,6 +827,7 @@ engines:
     display_type: ["infobox"]
     categories: [general]
 
+    disabled: true
   - name: duckduckgo
     engine: duckduckgo
     shortcut: ddg
@@ -999,6 +1009,7 @@ engines:
     search_type: text
     timeout: 10
 
+    disabled: true
   - name: gitlab
     engine: gitlab
     base_url: https://gitlab.com
@@ -1020,6 +1031,7 @@ engines:
     engine: github
     shortcut: gh
 
+    disabled: true
   - name: github code
     engine: github_code
     shortcut: ghc
@@ -1164,6 +1176,7 @@ engines:
       require_api_key: false
       results: JSON
 
+    disabled: true
   - name: il post
     engine: il_post
     shortcut: pst
@@ -1275,24 +1288,28 @@ engines:
     lemmy_type: Communities
     shortcut: leco
 
+    disabled: true
   - name: lemmy users
     engine: lemmy
     network: lemmy communities
     lemmy_type: Users
     shortcut: leus
 
+    disabled: true
   - name: lemmy posts
     engine: lemmy
     network: lemmy communities
     lemmy_type: Posts
     shortcut: lepo
 
+    disabled: true
   - name: lemmy comments
     engine: lemmy
     network: lemmy communities
     lemmy_type: Comments
     shortcut: lecom
 
+    disabled: true
   - name: library genesis
     engine: xpath
     # search_url: https://libgen.is/search.php?req={query}
@@ -1367,6 +1384,7 @@ engines:
     shortcut: luc
     timeout: 3.0
 
+    disabled: true
   - name: marginalia
     engine: marginalia
     shortcut: mar
@@ -1416,6 +1434,7 @@ engines:
       require_api_key: false
       results: JSON
 
+    disabled: true
   - name: metacpan
     engine: metacpan
     shortcut: cpan
@@ -1535,6 +1554,7 @@ engines:
       require_api_key: false
       results: JSON
 
+    disabled: true
   - name: openairepublications
     engine: json_engine
     paging: true
@@ -1555,6 +1575,7 @@ engines:
       require_api_key: false
       results: JSON
 
+    disabled: true
   - name: openalex
     engine: openalex
     shortcut: oa
@@ -1637,6 +1658,7 @@ engines:
     # Hide obsolete PDB entries.  Default is not to hide obsolete structures
     #  hide_obsolete: false
 
+    disabled: true
   - name: pexels
     engine: pexels
     shortcut: pe
@@ -1646,6 +1668,7 @@ engines:
     engine: photon
     shortcut: ph
 
+    disabled: true
   - name: pinterest
     engine: pinterest
     shortcut: pin
@@ -1803,10 +1826,12 @@ engines:
     engine: pubmed
     shortcut: pub
 
+    disabled: true
   - name: pypi
     shortcut: pypi
     engine: pypi
 
+    disabled: true
   - name: quark
     quark_category: general
     categories: [general]
@@ -1878,6 +1903,7 @@ engines:
     engine: radio_browser
     shortcut: rb
 
+    disabled: true
   - name: reddit
     engine: reddit
     shortcut: re
@@ -1936,6 +1962,7 @@ engines:
     engine: sepiasearch
     shortcut: sep
 
+    disabled: true
   - name: sogou
     engine: sogou
     shortcut: sogou
@@ -2033,6 +2060,7 @@ engines:
   #   query_fields: '' # query fields
   #   enable_http: true
 
+    disabled: true
   - name: springer nature
     engine: springer
     shortcut: springer
@@ -2184,6 +2212,7 @@ engines:
     categories: general
     search_type: web
     shortcut: yd
+    disabled: true
 
   - name: yandex images
     engine: yandex
@@ -2191,11 +2220,13 @@ engines:
     categories: images
     search_type: images
     shortcut: ydi
+    disabled: true
 
   - name: yandex music
     engine: yandex_music
     network: yandex
     shortcut: ydm
+    disabled: true
     # https://yandex.com/support/music/access.html
 
   - name: yahoo
@@ -2344,24 +2375,28 @@ engines:
     categories: images
     wc_search_type: image
 
+    disabled: true
   - name: wikicommons.videos
     engine: wikicommons
     shortcut: wcv
     categories: videos
     wc_search_type: video
 
+    disabled: true
   - name: wikicommons.audio
     engine: wikicommons
     shortcut: wca
     categories: music
     wc_search_type: audio
 
+    disabled: true
   - name: wikicommons.files
     engine: wikicommons
     shortcut: wcf
     categories: files
     wc_search_type: file
 
+    disabled: true
   - name: wolframalpha
     shortcut: wa
     engine: wolframalpha_noapi
@@ -2577,6 +2612,7 @@ engines:
     shortcut: wnik
     timeout: 5.0
 
+    disabled: true
   - name: woxikon.de synonyme
     engine: xpath
     shortcut: woxi
@@ -2648,6 +2684,7 @@ engines:
     shortcut: wttr
     timeout: 9.0
 
+    disabled: true
   - name: braveapi
     engine: braveapi
     # read https://docs.searxng.org/dev/engines/online/brave.html
